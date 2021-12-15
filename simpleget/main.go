@@ -4,17 +4,18 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 func main(){
-	resp, err := http.Get("http://localhost:18888")
-	if err != nil{
-		panic(err)
+	values := url.Values{
+		"query": {"hello world"},
 	}
+	resp, _ := http.Get("http://localhost:18888" + "?" + values.Encode())
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		panic(err)
-	}
+	body, _ := ioutil.ReadAll(resp.Body)
 	log.Println(string(body))
+	log.Println("status:", resp.Status)
+	log.Println("statuscode:", resp.StatusCode)
+	log.Println("headers:", resp.Header)
 }
