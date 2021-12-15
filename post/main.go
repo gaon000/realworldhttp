@@ -3,15 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
-	"net/url"
+	"strings"
 )
 
 func main(){
-	values := url.Values{
-		"test":{"value"},
-	}
-
-	resp, err := http.PostForm("http://localhost:18888", values) //x-www-form-urlencoded
+	reader := strings.NewReader("텍스트")
+	resp, err := http.Post("http://localhost:18888", "text/plain", reader) //x-www-form-urlencoded
 	if err != nil{
 		panic(err)
 	}
